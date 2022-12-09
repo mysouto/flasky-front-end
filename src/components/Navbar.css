@@ -1,0 +1,10 @@
+nav{
+    background-color: papayawhip;
+}
+
+a{
+    display: inline-block;
+    margin-right:100px;
+    margin-left:20px;
+    height:50px;
+}
