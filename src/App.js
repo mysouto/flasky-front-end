@@ -8,22 +8,22 @@ const bikesList = [
 		name: "This is some data that we will work to display next class!",
 		size: 50,
 		price: 100,
-		type: "special",
+		type: "special"
 	},
 	{
 		id: 2,
 		name: "This is some data that we will work to display next class!",
 		size: 40,
 		price: 20,
-		type: "duplicate",
+		type: "duplicate"
 	},
 	{
 		id: 3,
 		name: "New Bike",
 		size: 80,
 		price: 100,
-		type: "unique",
-	},
+		type: "unique"
+	}
 ];
 
 function App() {

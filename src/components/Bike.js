@@ -2,13 +2,21 @@ import PropTypes from "prop-types";
 
 import "./Bike.css";
 
-function Bike(props) {
-	// craeting variables for each Bike attribute
-	const bikeName = props.name;
-	const bikeId = props.id;
-	const bikeSize = props.size;
-	const bikeType = props.type;
-	const bikePrice = props.price;
+function Bike( { id, name, size, type, price } ){
+	// creating variables for each Bike attribute
+    const bikeName = name;
+    const bikeId = id;
+    const bikeSize = size;
+    const bikeType = type;
+    const bikePrice = price;
+    
+// another syntax - using props.
+// function Bike(props) {
+    // const bikeName = props.name;
+    // const bikeId = props.id;
+    // const bikeSize = props.size;
+    // const bikeType = props.type;
+    // const bikePrice = props.price;
 
 	return (
 		<div>
