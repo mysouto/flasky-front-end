@@ -1,46 +1,36 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 
 import "./Bike.css";
 
-// function Bike( { id, name, size, type, price } ){
-// creating variables for each Bike attribute
-// const bikeName = name;
-// const bikeId = id;
-// const bikeSize = size;
-// const bikeType = type;
-// const bikePrice = price;
-
-// another syntax - using props.
 function Bike(props) {
 	const bikeName = props.name;
 	const bikeId = props.id;
 	const bikeSize = props.size;
 	const bikeType = props.type;
 	// creating state variable
-	const [bikePrice, setBikePrice] = useState(props.price);
+	const bikePrice = props.price;
+	// add new function prop
+	const updatePrice = props.updatePrice;
 
-	// create event handler
-	function increaseBikePrice() {
-		let newBikePrice = bikePrice + 1;
-		setBikePrice(newBikePrice);
-	}
-	// Don’t try to read the state variable right after calling the setState function. It will have the OLD value.
-	// console.log(bikePrice);
-
-	const decreaseBikePrice = () => {
-		let newBikePrice = bikePrice - 1;
-		setBikePrice(newBikePrice);
-	};
-
-	// combining update price functions
-	function updatePrice(inc) {
-		// if arg passed in is 'true', add 1
+	function changeBikePrice(inc) {
+		// if increment is 'true', add 1
 		if (inc) {
-			setBikePrice(bikePrice + 1);
+			updatePrice(bikeId, bikePrice + 1);
+			// bikePrice += 1 doesn't work
+			// can't directly modify -> need to set setBikePrice useState function
 		} else {
-			// if arg passed in is 'false', subtract 1
-			setBikePrice(bikePrice - 1);
+			// if inc passed in is 'false', subtract 1
+			updatePrice(bikeId, bikePrice - 1);
+		}
+	}
+
+	// change price color
+	function getColorFromPrice(price) {
+		let myBudget = 100;
+		if (price <= myBudget) {
+			return "green";
+		} else {
+			return "red";
 		}
 	}
 
@@ -48,26 +38,27 @@ function Bike(props) {
 		<div>
 			<h2 className="bike__name">{bikeName}</h2>
 			<ul>
-				<li>{bikeId}</li>
-				<li>{bikeSize}</li>
-				<li>{bikeType}</li>
-				<li>${bikePrice}</li>
+				<li>ID: {bikeId}</li>
+				<li>Size: {bikeSize}</li>
+				<li>Type: {bikeType}</li>
+				<li>
+					Price:{" "}
+					<span style={{ color: getColorFromPrice(bikePrice) }}>
+						${bikePrice}
+					</span>
+				</li>
 			</ul>
-
-			{/* create buttons */}
-			{/* <button onClick={increaseBikePrice}>Increase Price</button>
-			<button onClick={decreaseBikePrice}>Decrease Price</button> */}
 
 			<button
 				onClick={() => {
-					updatePrice(true);
+					changeBikePrice(true);
 				}}
 			>
 				Increase Price
 			</button>
 			<button
 				onClick={() => {
-					updatePrice(true);
+					changeBikePrice(false);
 				}}
 			>
 				Decrease Price
@@ -78,6 +69,8 @@ function Bike(props) {
 
 Bike.propTypes = {
 	id: PropTypes.number.isRequired,
+	// add function prop
+	updatePrice: PropTypes.func.isRequired,
 };
 
 export default Bike;
