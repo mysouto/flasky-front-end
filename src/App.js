@@ -32,6 +32,7 @@ function App() {
 			<Navbar />
 
 			{/* send bikesList to bikesList component as a prop */}
+			{/* passing in JS expression */}
 			<BikeList bikesList={bikesList} />
 
 			<button>Add Bike</button>

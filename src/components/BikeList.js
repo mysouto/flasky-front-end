@@ -5,6 +5,9 @@ import Bike from "./Bike";
 
 // app is sending props to BikeList
 function BikeList({ bikesList }) {
+// function BikeList({ props }) {
+	// const bikesList = props.bikesList;
+
 	const bikeComponents = [];
 
 	for (const bike of bikesList) {
@@ -18,16 +21,12 @@ function BikeList({ bikesList }) {
 					type={bike.type}
 				/>
 			</li>
-		)
+		);
 	}
 
 	// using data from bikeList to create new components
 	// return bikesList.map((bike) => (
-	return(
-		<div>
-			{bikeComponents}
-		</div>
-	);
+	return <div>{bikeComponents}</div>;
 	//returns [<Bike/>, <Bike/>]
 }
 
