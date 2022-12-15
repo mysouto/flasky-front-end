@@ -1,7 +1,8 @@
+import { useState } from "react";
+
 import "./App.css";
 import Navbar from "./components/Navbar";
 import BikeList from "./components/BikeList.js";
-import { useState } from "react";
 
 // data will typically come from an API
 // hardcoded below
@@ -74,7 +75,16 @@ function App() {
 	};
 
 	// add new delete function
-	const deleteBike = (bikeId) => {};
+	const deleteBike = (bikeId) => {
+		console.log("deleteBike Called");
+		const newBikesList = [];
+		for (const bike of bikesList) {
+			if (bike.id !== bikeId) {
+				newBikesList.push(bike);
+			}
+		}
+		setBikesList(newBikesList);
+	};
 
 	return (
 		<div>
@@ -82,11 +92,13 @@ function App() {
 
 			{/* send bikesList to bikesList component as a prop */}
 			{/* passing in JS expression */}
-			<BikeList bikesList={bikesList} updatePrice={updatePrice} />
+			<BikeList
+				bikesList={bikesList}
+				updatePrice={updatePrice}
+				deleteBike={deleteBike}
+			/>
 
 			<button>Add Bike</button>
-
-			<button onClick={() => deleteBike(bikeId)}>Delete</button>
 		</div>
 	);
 }

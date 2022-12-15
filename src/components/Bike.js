@@ -9,8 +9,9 @@ function Bike(props) {
 	const bikeType = props.type;
 	// creating state variable
 	const bikePrice = props.price;
-	// add new function prop
+	// add new functions as props
 	const updatePrice = props.updatePrice;
+	const deleteBike = props.deleteBike;
 
 	function changeBikePrice(inc) {
 		// if increment is 'true', add 1
@@ -63,6 +64,9 @@ function Bike(props) {
 			>
 				Decrease Price
 			</button>
+
+			{/* add new delete button functionality */}
+			<button onClick={() => deleteBike(bikeId)}>Delete</button>
 		</div>
 	);
 }
@@ -71,6 +75,7 @@ Bike.propTypes = {
 	id: PropTypes.number.isRequired,
 	// add function prop
 	updatePrice: PropTypes.func.isRequired,
+	deleteBike: PropTypes.func.isRequired,
 };
 
 export default Bike;

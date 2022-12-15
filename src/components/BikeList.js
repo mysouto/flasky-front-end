@@ -8,6 +8,7 @@ import Bike from "./Bike";
 function BikeList(props) {
 	const bikesList = props.bikesList;
 	const updatePrice = props.updatePrice;
+	const deleteBike = props.deleteBike;
 
 	const bikeComponents = [];
 
@@ -26,6 +27,7 @@ function BikeList(props) {
 				// add new prop: callback function to each Bike component
 				updatePrice={updatePrice}
 				// not same as bike.price
+				deleteBike={deleteBike}
 			/>
 		);
 	}
@@ -50,6 +52,7 @@ BikeList.propTypes = {
 	),
 	// updatePrice functions is required
 	updatePrice: PropTypes.func.isRequired,
+	deleteBike: PropTypes.func.isRequired,
 };
 
 export default BikeList;
