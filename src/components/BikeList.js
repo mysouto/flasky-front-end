@@ -4,29 +4,35 @@ import PropTypes from "prop-types";
 import Bike from "./Bike";
 
 // app is sending props to BikeList
-function BikeList({ bikesList }) {
-// function BikeList({ props }) {
-	// const bikesList = props.bikesList;
+// function BikeList({ bikesList }) {
+function BikeList(props) {
+	const bikesList = props.bikesList;
+	const updatePrice = props.updatePrice;
 
 	const bikeComponents = [];
 
+	// using data from bikeList to create new components
 	for (const bike of bikesList) {
 		bikeComponents.push(
-			<li key={bike.id}>
-				<Bike
-					id={bike.id}
-					name={bike.name}
-					size={bike.size}
-					price={bike.price}
-					type={bike.type}
-				/>
-			</li>
+			// tag with info passed in from props
+			// create a Bike component with certain properties
+			<Bike
+				key={bike.id}
+				id={bike.id}
+				name={bike.name}
+				size={bike.size}
+				price={bike.price}
+				type={bike.type}
+				// add new prop: callback function to each Bike component
+				updatePrice={updatePrice}
+				// not same as bike.price
+			/>
 		);
 	}
 
-	// using data from bikeList to create new components
-	// return bikesList.map((bike) => (
+	// bikeComponents sent back to App
 	return <div>{bikeComponents}</div>;
+
 	//returns [<Bike/>, <Bike/>]
 }
 
@@ -42,6 +48,8 @@ BikeList.propTypes = {
 			price: PropTypes.number.isRequired,
 		})
 	),
+	// updatePrice functions is required
+	updatePrice: PropTypes.func.isRequired,
 };
 
 export default BikeList;
