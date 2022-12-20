@@ -1,35 +1,10 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import "./App.css";
 import Navbar from "./components/Navbar";
 import BikeList from "./components/BikeList.js";
-import axios from "axios";
-
-// data will typically come from an API
-// hardcoded below
-// const INITIAL_BIKES = [
-// 	{
-// 		id: 1,
-// 		name: "Cool",
-// 		size: 50,
-// 		price: 100,
-// 		type: "special",
-// 	},
-// 	{
-// 		id: 2,
-// 		name: "Nice",
-// 		size: 40,
-// 		price: 20,
-// 		type: "duplicate",
-// 	},
-// 	{
-// 		id: 3,
-// 		name: "New Bike",
-// 		size: 80,
-// 		price: 100,
-// 		type: "unique",
-// 	},
-// ];
+import NewBikeForm from "./components/NewBikeForm";
 
 function App() {
 	const [bikesList, setBikesList] = useState([]);
@@ -37,7 +12,6 @@ function App() {
 	// API lesson
 	// -- add path to API
 	const URL = "http://127.0.0.1:5000/bike";
-	// const URL = "http://localhost:5000/bike";
 
 	// -- add useEffect
 	useEffect(() => {
@@ -139,16 +113,15 @@ function App() {
 	return (
 		<div>
 			<Navbar />
-
 			{/* send bikesList to bikesList component as a prop */}
-			{/* passing in JS expression */}
 			<BikeList
 				bikesList={bikesList}
 				updatePrice={updatePrice}
 				deleteBike={deleteBike}
 			/>
 
-			<button>Add Bike</button>
+			{/* <button>Add Bike</button> */}
+			<NewBikeForm />
 		</div>
 	);
 }
