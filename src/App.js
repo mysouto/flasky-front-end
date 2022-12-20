@@ -44,7 +44,7 @@ function App() {
 		axios
 			.get(URL)
 			.then((response) => {
-				// console.log(response);
+				console.log(response);
 				const bikesAPIResCopy = response.data.map((bike) => {
 					return {
 						id: bike.id,
