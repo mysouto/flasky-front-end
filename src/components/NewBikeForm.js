@@ -1,6 +1,7 @@
 // import React from "react";
 // don't need to import React in newer version
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 import "./NewBikeForm.css";
 
@@ -12,7 +13,8 @@ const INITIAL_FORM_DATA = {
 	name: "",
 };
 
-const NewBikeForm = () => {
+// Defining a new component
+const NewBikeForm = (props) => {
 	// State below only holds info about size
 	// const [newBikeSize, setNewBikeSize] = useState(100);
 
@@ -21,10 +23,11 @@ const NewBikeForm = () => {
 
 	// 'e' stands for event
 	const handleChange = (e) => {
-		console.log("Handle change called");
-		console.log(
-			`Target name: ${e.target.name}. Target value: ${e.target.value}`
-		);
+		// console.log("Handle change called");
+		// console.log(e); // whole event object, interested in target.value in event
+		// console.log(
+		// 	`Target name: ${e.target.name}. Target value: ${e.target.value}`
+		// );
 		// setNewBikeSize(e.target.value);
 
 		// create JS object
@@ -35,13 +38,25 @@ const NewBikeForm = () => {
 			// key info is in target.name
 			[e.target.name]: e.target.value,
 		};
+		// console.log(newFormData);
 
 		// update state with useState function
 		setFormData(newFormData);
 	};
 
+	const handleNewBikeSubmit = (e) => {
+		// prevets default form submit event from happening
+		// default behavior: reloading every time we submit a form
+		e.preventDefault();
+		// check if form data containes new bike info that we want to create
+		// console.log(formData);
+
+		props.addBikeCallBackFunc(formData);
+		// props.addBike(formData);
+	};
+
 	return (
-		<form>
+		<form onSubmit={handleNewBikeSubmit}>
 			<br></br>
 			<label htmlFor="size"> Size</label>
 			<input
@@ -49,6 +64,7 @@ const NewBikeForm = () => {
 				id="size"
 				name="size"
 				// value={newBikeSize}
+				// formData is useState list
 				value={formData.size}
 				onChange={handleChange}
 			></input>
@@ -83,8 +99,15 @@ const NewBikeForm = () => {
 				onChange={handleChange}
 			></input>
 			<br></br>
+
+			<input type="submit" value="Add bike"></input>
 		</form>
 	);
+};
+
+NewBikeForm.propTypes = {
+	addBikeCallbackFunc: PropTypes.func,
+	// functions need isRequired?
 };
 
 export default NewBikeForm;

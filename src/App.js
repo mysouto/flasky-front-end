@@ -13,12 +13,11 @@ function App() {
 	// -- add path to API
 	const URL = "http://127.0.0.1:5000/bike";
 
-	// -- add useEffect
-	useEffect(() => {
+	const fetchAllBikes = () => {
 		axios
 			.get(URL)
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				const bikesAPIResCopy = response.data.map((bike) => {
 					return {
 						id: bike.id,
@@ -33,18 +32,9 @@ function App() {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	};
 
-	// 1. make a deep copy of initial data
-	// const initialCopy = INITIAL_BIKES.map((bike) => {
-	// 	return { ...bike };
-	// });
-
-	// WHERE DATA NEEDS TO CHANGE: bikesList
-	// 2. create state
-	// const [bikesList, setBikesList] = useState(initialCopy);
-
-	// 3. define callback functions to move logic here
+	useEffect(fetchAllBikes, []); // initial get request
 
 	// this functions updatesPrices with 2 args: id and new price
 	// GOAL: update bikesList array
@@ -110,6 +100,32 @@ function App() {
 			});
 	};
 
+	// single source of truth - add API function where (use state) setter is
+	const addBike = (newBikeInfo) => {
+		console.log("Calling addBike");
+		// add axios.post request here
+		axios
+			.post(URL, newBikeInfo)
+			// handling .then to update frontend, update state variable with setBikesList()
+			.then((response) => {
+				// method 1 - use helper for get request
+				// fetchAllBikes(); // This helper function will make a .get() call to fetch all bikes and update the state variable to display them
+
+				// method 2
+				//this method does not require a .get request; we are pushing the bike data to the bikes list and using the setter to trigger a rerender
+				const newBikes = [...bikesList];
+				const newBikeJSON = {
+					...newBikeInfo,
+					id: response.data.id,
+				};
+				newBikes.push(newBikeJSON);
+				setBikesList(newBikes);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
 	return (
 		<div>
 			<Navbar />
@@ -121,7 +137,7 @@ function App() {
 			/>
 
 			{/* <button>Add Bike</button> */}
-			<NewBikeForm />
+			<NewBikeForm addBikeCallBackFunc={addBike} />
 		</div>
 	);
 }
