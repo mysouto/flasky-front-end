@@ -36,6 +36,32 @@ function App() {
 
 	useEffect(fetchAllBikes, []); // initial get request
 
+	// single source of truth - add API function where (use state) setter is
+	const addBike = (newBikeInfo) => {
+		console.log("Calling addBike");
+		// add axios.post request here
+		axios
+			.post(URL, newBikeInfo)
+			// handling .then to update frontend, update state variable with setBikesList()
+			.then((response) => {
+				// method 1 - use helper for get request
+				// fetchAllBikes(); // This helper function will make a .get() call to fetch all bikes and update the state variable to display them
+
+				// method 2
+				//this method does not require a .get request; we are pushing the bike data to the bikes list and using the setter to trigger a rerender
+				const newBikes = [...bikesList];
+				const newBikeJSON = {
+					...newBikeInfo,
+					id: response.data.id,
+				};
+				newBikes.push(newBikeJSON);
+				setBikesList(newBikes);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
 	// this functions updatesPrices with 2 args: id and new price
 	// GOAL: update bikesList array
 	// -- need to create a new array
@@ -97,32 +123,6 @@ function App() {
 			})
 			.catch((err) => {
 				console.log(err);
-			});
-	};
-
-	// single source of truth - add API function where (use state) setter is
-	const addBike = (newBikeInfo) => {
-		console.log("Calling addBike");
-		// add axios.post request here
-		axios
-			.post(URL, newBikeInfo)
-			// handling .then to update frontend, update state variable with setBikesList()
-			.then((response) => {
-				// method 1 - use helper for get request
-				// fetchAllBikes(); // This helper function will make a .get() call to fetch all bikes and update the state variable to display them
-
-				// method 2
-				//this method does not require a .get request; we are pushing the bike data to the bikes list and using the setter to trigger a rerender
-				const newBikes = [...bikesList];
-				const newBikeJSON = {
-					...newBikeInfo,
-					id: response.data.id,
-				};
-				newBikes.push(newBikeJSON);
-				setBikesList(newBikes);
-			})
-			.catch((error) => {
-				console.log(error);
 			});
 	};
 
